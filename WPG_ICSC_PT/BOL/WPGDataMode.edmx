@@ -1,0 +1,811 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="WPG_ConferenceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="NumberOfProperties" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="F_Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="L_Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Role_Id" Type="int" />
+          <Property Name="EmployeeStatus" Type="varchar" MaxLength="50" />
+          <Property Name="Manager_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Employee_Guest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Employee_Id" Type="int" />
+          <Property Name="Guest_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Guest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="F_Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="L_Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Company_id" Type="int" />
+          <Property Name="Meeting_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Meeting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Start_Time" Type="datetime" Nullable="false" />
+          <Property Name="End_Time" Type="datetime" Nullable="false" />
+          <Property Name="Meeting_Date" Type="datetime" Nullable="false" />
+          <Property Name="Date_Scheduled" Type="datetime" />
+          <Property Name="Topic" Type="varchar" MaxLength="100" />
+          <Property Name="MeetingStatus_id" Type="int" />
+          <Property Name="MeetingType_id" Type="int" />
+          <Property Name="Pause_Start_Time" Type="datetime" />
+          <Property Name="Pause_End_Time" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Meeting_Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Employee_Id" Type="int" />
+          <Property Name="Meeting_Id" Type="int" />
+          <Property Name="IsRequired" Type="bit" />
+        </EntityType>
+        <EntityType Name="MeetingStatus">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="status" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MeetingType">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="meeting_type" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Notes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+          <Property Name="NoteType" Type="varchar" MaxLength="50" />
+          <Property Name="Employee_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Role" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Employee_Guest_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Employee_Guest" Type="Self.Employee_Guest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee_Guest">
+              <PropertyRef Name="Employee_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Guest_Guest">
+          <End Role="Guest" Type="Self.Guest" Multiplicity="0..1" />
+          <End Role="Employee_Guest" Type="Self.Employee_Guest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Guest">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee_Guest">
+              <PropertyRef Name="Guest_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Meeting_Employee_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Meeting_Employee" Type="Self.Meeting_Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Meeting_Employee">
+              <PropertyRef Name="Employee_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Meeting_Employee_Meeting">
+          <End Role="Meeting" Type="Self.Meeting" Multiplicity="0..1" />
+          <End Role="Meeting_Employee" Type="Self.Meeting_Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meeting">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Meeting_Employee">
+              <PropertyRef Name="Meeting_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Employee_tbl_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Role_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_guest_tbl_company">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="Guest" Type="Self.Guest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Guest">
+              <PropertyRef Name="Company_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_guest_tbl_meeting">
+          <End Role="Meeting" Type="Self.Meeting" Multiplicity="0..1" />
+          <End Role="Guest" Type="Self.Guest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meeting">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Guest">
+              <PropertyRef Name="Meeting_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_meeting_tbl_meetingStatus">
+          <End Role="MeetingStatus" Type="Self.MeetingStatus" Multiplicity="0..1" />
+          <End Role="Meeting" Type="Self.Meeting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MeetingStatus">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Meeting">
+              <PropertyRef Name="MeetingStatus_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_meeting_tbl_meetingType">
+          <End Role="MeetingType" Type="Self.MeetingType" Multiplicity="0..1" />
+          <End Role="Meeting" Type="Self.Meeting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MeetingType">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Meeting">
+              <PropertyRef Name="MeetingType_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_notes_tbl_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Notes" Type="Self.Notes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Notes">
+              <PropertyRef Name="Employee_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="GetEmpLoginInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="Password" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="WPG_ConferenceModelStoreContainer">
+          <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee_Guest" EntityType="Self.Employee_Guest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Guest" EntityType="Self.Guest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Meeting" EntityType="Self.Meeting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Meeting_Employee" EntityType="Self.Meeting_Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MeetingStatus" EntityType="Self.MeetingStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MeetingType" EntityType="Self.MeetingType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notes" EntityType="Self.Notes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Employee_Guest_Employee" Association="Self.FK_Employee_Guest_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Employee_Guest" EntitySet="Employee_Guest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Guest_Guest" Association="Self.FK_Employee_Guest_Guest">
+            <End Role="Guest" EntitySet="Guest" />
+            <End Role="Employee_Guest" EntitySet="Employee_Guest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Meeting_Employee_Employee" Association="Self.FK_Meeting_Employee_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Meeting_Employee" EntitySet="Meeting_Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Meeting_Employee_Meeting" Association="Self.FK_Meeting_Employee_Meeting">
+            <End Role="Meeting" EntitySet="Meeting" />
+            <End Role="Meeting_Employee" EntitySet="Meeting_Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Employee_tbl_Roles" Association="Self.FK_tbl_Employee_tbl_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_guest_tbl_company" Association="Self.FK_tbl_guest_tbl_company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Guest" EntitySet="Guest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_guest_tbl_meeting" Association="Self.FK_tbl_guest_tbl_meeting">
+            <End Role="Meeting" EntitySet="Meeting" />
+            <End Role="Guest" EntitySet="Guest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_meeting_tbl_meetingStatus" Association="Self.FK_tbl_meeting_tbl_meetingStatus">
+            <End Role="MeetingStatus" EntitySet="MeetingStatus" />
+            <End Role="Meeting" EntitySet="Meeting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_meeting_tbl_meetingType" Association="Self.FK_tbl_meeting_tbl_meetingType">
+            <End Role="MeetingType" EntitySet="MeetingType" />
+            <End Role="Meeting" EntitySet="Meeting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_notes_tbl_Employee" Association="Self.FK_tbl_notes_tbl_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Notes" EntitySet="Notes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WPG_ConferenceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="WPG_ConferenceEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="GetEmpLoginInfo" ReturnType="Collection(String)">
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(WPG_ConferenceModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(WPG_ConferenceModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="Companies" EntityType="WPG_ConferenceModel.Company" />
+          <EntitySet Name="Employees" EntityType="WPG_ConferenceModel.Employee" />
+          <EntitySet Name="Employee_Guest" EntityType="WPG_ConferenceModel.Employee_Guest" />
+          <EntitySet Name="Guests" EntityType="WPG_ConferenceModel.Guest" />
+          <EntitySet Name="Meetings" EntityType="WPG_ConferenceModel.Meeting" />
+          <EntitySet Name="Meeting_Employee" EntityType="WPG_ConferenceModel.Meeting_Employee" />
+          <EntitySet Name="MeetingStatus" EntityType="WPG_ConferenceModel.MeetingStatu" />
+          <EntitySet Name="MeetingTypes" EntityType="WPG_ConferenceModel.MeetingType" />
+          <EntitySet Name="Notes" EntityType="WPG_ConferenceModel.Note" />
+          <EntitySet Name="Roles" EntityType="WPG_ConferenceModel.Role" />
+          <AssociationSet Name="FK_tbl_guest_tbl_company" Association="WPG_ConferenceModel.FK_tbl_guest_tbl_company">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="Guest" EntitySet="Guests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Guest_Employee" Association="WPG_ConferenceModel.FK_Employee_Guest_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Employee_Guest" EntitySet="Employee_Guest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Meeting_Employee_Employee" Association="WPG_ConferenceModel.FK_Meeting_Employee_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Meeting_Employee" EntitySet="Meeting_Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Employee_tbl_Roles" Association="WPG_ConferenceModel.FK_tbl_Employee_tbl_Roles">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_notes_tbl_Employee" Association="WPG_ConferenceModel.FK_tbl_notes_tbl_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Note" EntitySet="Notes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Guest_Guest" Association="WPG_ConferenceModel.FK_Employee_Guest_Guest">
+            <End Role="Guest" EntitySet="Guests" />
+            <End Role="Employee_Guest" EntitySet="Employee_Guest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_guest_tbl_meeting" Association="WPG_ConferenceModel.FK_tbl_guest_tbl_meeting">
+            <End Role="Meeting" EntitySet="Meetings" />
+            <End Role="Guest" EntitySet="Guests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Meeting_Employee_Meeting" Association="WPG_ConferenceModel.FK_Meeting_Employee_Meeting">
+            <End Role="Meeting" EntitySet="Meetings" />
+            <End Role="Meeting_Employee" EntitySet="Meeting_Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_meeting_tbl_meetingStatus" Association="WPG_ConferenceModel.FK_tbl_meeting_tbl_meetingStatus">
+            <End Role="MeetingStatu" EntitySet="MeetingStatus" />
+            <End Role="Meeting" EntitySet="Meetings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_meeting_tbl_meetingType" Association="WPG_ConferenceModel.FK_tbl_meeting_tbl_meetingType">
+            <End Role="MeetingType" EntitySet="MeetingTypes" />
+            <End Role="Meeting" EntitySet="Meetings" />
+          </AssociationSet>
+        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="NumberOfProperties" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Guests" Relationship="WPG_ConferenceModel.FK_tbl_guest_tbl_company" FromRole="Company" ToRole="Guest" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="F_Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="L_Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Role_Id" Type="Int32" />
+          <Property Name="EmployeeStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Manager_Id" Type="Int32" />
+          <NavigationProperty Name="Employee_Guest" Relationship="WPG_ConferenceModel.FK_Employee_Guest_Employee" FromRole="Employee" ToRole="Employee_Guest" />
+          <NavigationProperty Name="Meeting_Employee" Relationship="WPG_ConferenceModel.FK_Meeting_Employee_Employee" FromRole="Employee" ToRole="Meeting_Employee" />
+          <NavigationProperty Name="Role" Relationship="WPG_ConferenceModel.FK_tbl_Employee_tbl_Roles" FromRole="Employee" ToRole="Role" />
+          <NavigationProperty Name="Notes" Relationship="WPG_ConferenceModel.FK_tbl_notes_tbl_Employee" FromRole="Employee" ToRole="Note" />
+        </EntityType>
+        <EntityType Name="Employee_Guest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Employee_Id" Type="Int32" />
+          <Property Name="Guest_Id" Type="Int32" />
+          <NavigationProperty Name="Employee" Relationship="WPG_ConferenceModel.FK_Employee_Guest_Employee" FromRole="Employee_Guest" ToRole="Employee" />
+          <NavigationProperty Name="Guest" Relationship="WPG_ConferenceModel.FK_Employee_Guest_Guest" FromRole="Employee_Guest" ToRole="Guest" />
+        </EntityType>
+        <EntityType Name="Guest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="F_Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="L_Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Company_id" Type="Int32" />
+          <Property Name="Meeting_Id" Type="Int32" />
+          <NavigationProperty Name="Company" Relationship="WPG_ConferenceModel.FK_tbl_guest_tbl_company" FromRole="Guest" ToRole="Company" />
+          <NavigationProperty Name="Employee_Guest" Relationship="WPG_ConferenceModel.FK_Employee_Guest_Guest" FromRole="Guest" ToRole="Employee_Guest" />
+          <NavigationProperty Name="Meeting" Relationship="WPG_ConferenceModel.FK_tbl_guest_tbl_meeting" FromRole="Guest" ToRole="Meeting" />
+        </EntityType>
+        <EntityType Name="Meeting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Start_Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="End_Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Meeting_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Date_Scheduled" Type="DateTime" Precision="3" />
+          <Property Name="Topic" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MeetingStatus_id" Type="Int32" />
+          <Property Name="MeetingType_id" Type="Int32" />
+          <Property Name="Pause_Start_Time" Type="DateTime" Precision="3" />
+          <Property Name="Pause_End_Time" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Guests" Relationship="WPG_ConferenceModel.FK_tbl_guest_tbl_meeting" FromRole="Meeting" ToRole="Guest" />
+          <NavigationProperty Name="Meeting_Employee" Relationship="WPG_ConferenceModel.FK_Meeting_Employee_Meeting" FromRole="Meeting" ToRole="Meeting_Employee" />
+          <NavigationProperty Name="MeetingStatu" Relationship="WPG_ConferenceModel.FK_tbl_meeting_tbl_meetingStatus" FromRole="Meeting" ToRole="MeetingStatu" />
+          <NavigationProperty Name="MeetingType" Relationship="WPG_ConferenceModel.FK_tbl_meeting_tbl_meetingType" FromRole="Meeting" ToRole="MeetingType" />
+        </EntityType>
+        <EntityType Name="Meeting_Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Employee_Id" Type="Int32" />
+          <Property Name="Meeting_Id" Type="Int32" />
+          <Property Name="IsRequired" Type="Boolean" />
+          <NavigationProperty Name="Employee" Relationship="WPG_ConferenceModel.FK_Meeting_Employee_Employee" FromRole="Meeting_Employee" ToRole="Employee" />
+          <NavigationProperty Name="Meeting" Relationship="WPG_ConferenceModel.FK_Meeting_Employee_Meeting" FromRole="Meeting_Employee" ToRole="Meeting" />
+        </EntityType>
+        <EntityType Name="MeetingStatu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Meetings" Relationship="WPG_ConferenceModel.FK_tbl_meeting_tbl_meetingStatus" FromRole="MeetingStatu" ToRole="Meeting" />
+        </EntityType>
+        <EntityType Name="MeetingType">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="meeting_type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Meetings" Relationship="WPG_ConferenceModel.FK_tbl_meeting_tbl_meetingType" FromRole="MeetingType" ToRole="Meeting" />
+        </EntityType>
+        <EntityType Name="Note">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NoteType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Employee_Id" Type="Int32" />
+          <NavigationProperty Name="Employee" Relationship="WPG_ConferenceModel.FK_tbl_notes_tbl_Employee" FromRole="Note" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Role1" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Employees" Relationship="WPG_ConferenceModel.FK_tbl_Employee_tbl_Roles" FromRole="Role" ToRole="Employee" />
+        </EntityType>
+        <Association Name="FK_tbl_guest_tbl_company">
+          <End Type="WPG_ConferenceModel.Company" Role="Company" Multiplicity="0..1" />
+          <End Type="WPG_ConferenceModel.Guest" Role="Guest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Guest">
+              <PropertyRef Name="Company_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Guest_Employee">
+          <End Type="WPG_ConferenceModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="WPG_ConferenceModel.Employee_Guest" Role="Employee_Guest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee_Guest">
+              <PropertyRef Name="Employee_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Meeting_Employee_Employee">
+          <End Type="WPG_ConferenceModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="WPG_ConferenceModel.Meeting_Employee" Role="Meeting_Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Meeting_Employee">
+              <PropertyRef Name="Employee_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Employee_tbl_Roles">
+          <End Type="WPG_ConferenceModel.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="WPG_ConferenceModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Role_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_notes_tbl_Employee">
+          <End Type="WPG_ConferenceModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="WPG_ConferenceModel.Note" Role="Note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Note">
+              <PropertyRef Name="Employee_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Guest_Guest">
+          <End Type="WPG_ConferenceModel.Guest" Role="Guest" Multiplicity="0..1" />
+          <End Type="WPG_ConferenceModel.Employee_Guest" Role="Employee_Guest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Guest">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee_Guest">
+              <PropertyRef Name="Guest_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_guest_tbl_meeting">
+          <End Type="WPG_ConferenceModel.Meeting" Role="Meeting" Multiplicity="0..1" />
+          <End Type="WPG_ConferenceModel.Guest" Role="Guest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meeting">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Guest">
+              <PropertyRef Name="Meeting_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Meeting_Employee_Meeting">
+          <End Type="WPG_ConferenceModel.Meeting" Role="Meeting" Multiplicity="0..1" />
+          <End Type="WPG_ConferenceModel.Meeting_Employee" Role="Meeting_Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meeting">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Meeting_Employee">
+              <PropertyRef Name="Meeting_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_meeting_tbl_meetingStatus">
+          <End Type="WPG_ConferenceModel.MeetingStatu" Role="MeetingStatu" Multiplicity="0..1" />
+          <End Type="WPG_ConferenceModel.Meeting" Role="Meeting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MeetingStatu">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Meeting">
+              <PropertyRef Name="MeetingStatus_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_meeting_tbl_meetingType">
+          <End Type="WPG_ConferenceModel.MeetingType" Role="MeetingType" Multiplicity="0..1" />
+          <End Type="WPG_ConferenceModel.Meeting" Role="Meeting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MeetingType">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Meeting">
+              <PropertyRef Name="MeetingType_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WPG_ConferenceModelStoreContainer" CdmEntityContainer="WPG_ConferenceEntities">
+          <FunctionImportMapping FunctionImportName="GetEmpLoginInfo" FunctionName="WPG_ConferenceModel.Store.GetEmpLoginInfo" />
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="WPG_ConferenceModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="WPG_ConferenceModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="WPG_ConferenceModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="WPG_ConferenceModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WPG_ConferenceModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="WPG_ConferenceModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WPG_ConferenceModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="WPG_ConferenceModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="WPG_ConferenceModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="Companies">
+            <EntityTypeMapping TypeName="WPG_ConferenceModel.Company">
+              <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="NumberOfProperties" ColumnName="NumberOfProperties" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="WPG_ConferenceModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Manager_Id" ColumnName="Manager_Id" />
+                <ScalarProperty Name="EmployeeStatus" ColumnName="EmployeeStatus" />
+                <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="L_Name" ColumnName="L_Name" />
+                <ScalarProperty Name="F_Name" ColumnName="F_Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee_Guest">
+            <EntityTypeMapping TypeName="WPG_ConferenceModel.Employee_Guest">
+              <MappingFragment StoreEntitySet="Employee_Guest">
+                <ScalarProperty Name="Guest_Id" ColumnName="Guest_Id" />
+                <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Guests">
+            <EntityTypeMapping TypeName="WPG_ConferenceModel.Guest">
+              <MappingFragment StoreEntitySet="Guest">
+                <ScalarProperty Name="Meeting_Id" ColumnName="Meeting_Id" />
+                <ScalarProperty Name="Company_id" ColumnName="Company_id" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="L_Name" ColumnName="L_Name" />
+                <ScalarProperty Name="F_Name" ColumnName="F_Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Meetings">
+            <EntityTypeMapping TypeName="WPG_ConferenceModel.Meeting">
+              <MappingFragment StoreEntitySet="Meeting">
+                <ScalarProperty Name="Pause_End_Time" ColumnName="Pause_End_Time" />
+                <ScalarProperty Name="Pause_Start_Time" ColumnName="Pause_Start_Time" />
+                <ScalarProperty Name="MeetingType_id" ColumnName="MeetingType_id" />
+                <ScalarProperty Name="MeetingStatus_id" ColumnName="MeetingStatus_id" />
+                <ScalarProperty Name="Topic" ColumnName="Topic" />
+                <ScalarProperty Name="Date_Scheduled" ColumnName="Date_Scheduled" />
+                <ScalarProperty Name="Meeting_Date" ColumnName="Meeting_Date" />
+                <ScalarProperty Name="End_Time" ColumnName="End_Time" />
+                <ScalarProperty Name="Start_Time" ColumnName="Start_Time" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Meeting_Employee">
+            <EntityTypeMapping TypeName="WPG_ConferenceModel.Meeting_Employee">
+              <MappingFragment StoreEntitySet="Meeting_Employee">
+                <ScalarProperty Name="IsRequired" ColumnName="IsRequired" />
+                <ScalarProperty Name="Meeting_Id" ColumnName="Meeting_Id" />
+                <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MeetingStatus">
+            <EntityTypeMapping TypeName="WPG_ConferenceModel.MeetingStatu">
+              <MappingFragment StoreEntitySet="MeetingStatus">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MeetingTypes">
+            <EntityTypeMapping TypeName="WPG_ConferenceModel.MeetingType">
+              <MappingFragment StoreEntitySet="MeetingType">
+                <ScalarProperty Name="meeting_type" ColumnName="meeting_type" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notes">
+            <EntityTypeMapping TypeName="WPG_ConferenceModel.Note">
+              <MappingFragment StoreEntitySet="Notes">
+                <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+                <ScalarProperty Name="NoteType" ColumnName="NoteType" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="WPG_ConferenceModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="Role1" ColumnName="Role" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
