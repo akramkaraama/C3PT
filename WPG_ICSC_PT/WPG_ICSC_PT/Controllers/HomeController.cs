@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BOL;
+using BLL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +10,20 @@ namespace WPG_ICSC_PT.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        WPG_ConferenceEntities wpgDb = null;
+        EmployeeBL empBL = null;
+
+        public HomeController()
         {
-            return View();
+            wpgDb = new WPG_ConferenceEntities();
+            empBL = new EmployeeBL();
+        }
+
+        public ActionResult Index()
+        {             
+            //List<Employee> employees = empBL.GetALL().ToList();
+
+            return View(empBL.GetALL().ToList());
         }
 
         public ActionResult About()
