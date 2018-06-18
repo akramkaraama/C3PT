@@ -61,6 +61,7 @@
     <Compile Include="Guest.cs">
       <DependentUpon>WPGDataMode.tt</DependentUpon>
     </Compile>
+    <Compile Include="HomeViewModel.cs" />
     <Compile Include="Meeting.cs">
       <DependentUpon>WPGDataMode.tt</DependentUpon>
     </Compile>
