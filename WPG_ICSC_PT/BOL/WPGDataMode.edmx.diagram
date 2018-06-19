@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="41d4b50403404cb98bded844f75467e4" Name="Diagram1">
+        <EntityTypeShape EntityType="WPG_ConferenceModel.Company" Width="1.5" PointX="6" PointY="0.75" />
+        <EntityTypeShape EntityType="WPG_ConferenceModel.Employee" Width="1.5" PointX="8.25" PointY="7" />
+        <EntityTypeShape EntityType="WPG_ConferenceModel.Employee_Guest" Width="1.5" PointX="10.5" PointY="3.625" />
+        <EntityTypeShape EntityType="WPG_ConferenceModel.Guest" Width="1.5" PointX="8.25" PointY="3.125" />
+        <EntityTypeShape EntityType="WPG_ConferenceModel.Meeting" Width="1.5" PointX="3" PointY="2.75" />
+        <EntityTypeShape EntityType="WPG_ConferenceModel.Meeting_Employee" Width="1.5" PointX="5.25" PointY="3.5" />
+        <EntityTypeShape EntityType="WPG_ConferenceModel.MeetingStatu" Width="1.5" PointX="0.75" PointY="0.875" />
+        <EntityTypeShape EntityType="WPG_ConferenceModel.MeetingType" Width="1.5" PointX="0.75" PointY="3.875" />
+        <EntityTypeShape EntityType="WPG_ConferenceModel.Note" Width="1.5" PointX="10.5" PointY="7.5" />
+        <EntityTypeShape EntityType="WPG_ConferenceModel.Role" Width="1.5" PointX="6" PointY="7.875" />
+        <AssociationConnector Association="WPG_ConferenceModel.FK_tbl_guest_tbl_company" />
+        <AssociationConnector Association="WPG_ConferenceModel.FK_Employee_Guest_Employee" />
+        <AssociationConnector Association="WPG_ConferenceModel.FK_Meeting_Employee_Employee" />
+        <AssociationConnector Association="WPG_ConferenceModel.FK_tbl_Employee_tbl_Roles" />
+        <AssociationConnector Association="WPG_ConferenceModel.FK_tbl_notes_tbl_Employee" />
+        <AssociationConnector Association="WPG_ConferenceModel.FK_Employee_Guest_Guest" />
+        <AssociationConnector Association="WPG_ConferenceModel.FK_tbl_guest_tbl_meeting" />
+        <AssociationConnector Association="WPG_ConferenceModel.FK_Meeting_Employee_Meeting" />
+        <AssociationConnector Association="WPG_ConferenceModel.FK_tbl_meeting_tbl_meetingStatus" />
+        <AssociationConnector Association="WPG_ConferenceModel.FK_tbl_meeting_tbl_meetingType" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
