@@ -13,13 +13,13 @@ namespace WPG_ICSC_PT.Controllers
         WPG_ConferenceEntities wpgDb;
         HomeViewModel homeVM;
         EmployeeBL empBL;
-        
+
 
         public HomeController()
         {
             wpgDb = new WPG_ConferenceEntities();
             homeVM = new HomeViewModel();
-            //empBL = new EmployeeBL();
+            empBL = new EmployeeBL();
         }
 
         public ActionResult Index(int Id)
@@ -32,7 +32,7 @@ namespace WPG_ICSC_PT.Controllers
             var viewModel = new HomeViewModel();
             viewModel.employees = employees;
             viewModel.meetings = meetings;
-            viewModel.empMeetings = wpgDb.Meeting_Employee.Where(x => x.Employee_Id == Id).ToList();
+            viewModel.employee_Meetings = wpgDb.Meeting_Employee.Where(x => x.Employee_Id == Id).ToList();
 
             return View(viewModel);
         }
