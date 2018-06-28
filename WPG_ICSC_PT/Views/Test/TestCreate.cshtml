@@ -1,0 +1,18 @@
+﻿@model WPG_ICSC_PT.Models.TestModel
+@{
+    ViewBag.Title = "TestCreate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>TestCreate</h2>
+
+<form action="@Url.Action("Create", "Test")" method="post">
+
+    @Html.TextBoxFor(a => Model.Employee.Email)
+    @Html.TextBoxFor(a => Model.Guest.F_Name)
+    @Html.TextBoxFor(a => Model.Note.Description)
+    @Html.TextBoxFor(a => Model.Meeting.MeetingStatu)
+    <button type="submit">Submit</button>
+</form>
+
+

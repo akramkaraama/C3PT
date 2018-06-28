@@ -1,0 +1,41 @@
+﻿@model BOL.Meeting
+
+@if (Model != null)
+{
+    <br />
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h3 class="panel-title text-center">Meeting Details</h3>
+        </div>
+        <div class="panel-body">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <i class="glyphicon glyphicon-info-sign" style="color: red"></i> <strong>Topic: </strong>@Model.Topic
+                </li>
+                <li class="list-group-item">
+                    <i class="glyphicon glyphicon-calendar" style="color: blue"></i> <b>Date: </b> @Model.Meeting_Date
+                </li>
+                <li class="list-group-item">
+                    <i class="glyphicon glyphicon-time" style="color: blue"></i> <b>Start: </b> @Model.Start_Time
+                </li>
+                <li class="list-group-item">
+                    <i class="glyphicon glyphicon-bell " style="color: green"></i>  <strong>Type: </strong> @Model.MeetingType.meeting_type
+                </li>
+                <li class="list-group-item">
+                    <i class="glyphicon glyphicon-bell " style="color: green"></i>  <strong>CompanyName: </strong> @Model.Guests.FirstOrDefault(x => x.Meeting_Id == Model.Id).Company.Name
+                </li>
+                @*<li class="list-group-item">
+            <i class="glyphicon glyphicon-bell " style="color: green"></i>  <strong>Notes: </strong><p> @Model.Meeting_Employee.FirstOrDefault(x => x.Meeting_Id == Model.Id).Employee.Notes </p>
+        </li>*@
+            </ul>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-dismissible alert-info">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Heads up!</strong> No meetings found for this user.
+    </div>
+}
+
