@@ -12,15 +12,18 @@ namespace BOL
     using System;
     using System.Collections.Generic;
     
-    public partial class Note
+    public partial class RequirementOption
     {
-        public int Id { get; set; }
-        public string Description { get; set; }
-        public Nullable<System.DateTime> Note_Date { get; set; }
-        public Nullable<System.DateTime> Note_Time { get; set; }
-        public string NoteType { get; set; }
-        public Nullable<int> Meeting_id { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public RequirementOption()
+        {
+            this.MeetingEmployees = new HashSet<MeetingEmployee>();
+        }
     
-        public virtual Meeting Meeting { get; set; }
+        public int Id { get; set; }
+        public string IsRequired { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MeetingEmployee> MeetingEmployees { get; set; }
     }
 }

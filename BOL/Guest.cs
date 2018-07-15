@@ -17,7 +17,7 @@ namespace BOL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Guest()
         {
-            this.Employee_Guest = new HashSet<Employee_Guest>();
+            this.EmployeeGuests = new HashSet<EmployeeGuest>();
         }
     
         public int Id { get; set; }
@@ -30,7 +30,7 @@ namespace BOL
     
         public virtual Company Company { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee_Guest> Employee_Guest { get; set; }
+        public virtual ICollection<EmployeeGuest> EmployeeGuests { get; set; }
         public virtual Meeting Meeting { get; set; }
     }
 }

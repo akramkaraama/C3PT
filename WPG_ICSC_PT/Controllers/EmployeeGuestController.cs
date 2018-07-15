@@ -17,7 +17,7 @@ namespace WPG_ICSC_PT.Controllers
         // GET: EmployeeGuest
         public ActionResult Index()
         {
-            var employee_Guest = db.Employee_Guest.Include(e => e.Employee).Include(e => e.Guest);
+            var employee_Guest = db.EmployeeGuests.Include(e => e.Employee).Include(e => e.Guest);
             return View(employee_Guest.ToList());
         }
 
@@ -28,7 +28,7 @@ namespace WPG_ICSC_PT.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee_Guest employee_Guest = db.Employee_Guest.Find(id);
+            EmployeeGuest employee_Guest = db.EmployeeGuests.Find(id);
             if (employee_Guest == null)
             {
                 return HttpNotFound();
@@ -39,8 +39,11 @@ namespace WPG_ICSC_PT.Controllers
         // GET: EmployeeGuest/Create
         public ActionResult Create()
         {
-            ViewBag.Employee_Id = new SelectList(db.Employees, "Id", "F_Name");
-            ViewBag.Guest_Id = new SelectList(db.Guests, "Id", "F_Name");
+            var employeeNames = db.Employees.Select(e => e.F_Name + " " + e.L_Name);
+            ViewBag.Employee_Id = new SelectList(employeeNames, db.Employees, "Id");
+
+            var guestNames = db.Guests.Select(g => g.F_Name + " " + g.L_Name);
+            ViewBag.Guest_Id = new SelectList(guestNames, db.Guests, "Id");
             return View();
         }
 
@@ -49,11 +52,11 @@ namespace WPG_ICSC_PT.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Employee_Id,Guest_Id")] Employee_Guest employee_Guest)
+        public ActionResult Create([Bind(Include = "Id,Employee_Id,Guest_Id")] EmployeeGuest employee_Guest)
         {
             if (ModelState.IsValid)
             {
-                db.Employee_Guest.Add(employee_Guest);
+                db.EmployeeGuests.Add(employee_Guest);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -70,7 +73,7 @@ namespace WPG_ICSC_PT.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee_Guest employee_Guest = db.Employee_Guest.Find(id);
+            EmployeeGuest employee_Guest = db.EmployeeGuests.Find(id);
             if (employee_Guest == null)
             {
                 return HttpNotFound();
@@ -85,7 +88,7 @@ namespace WPG_ICSC_PT.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Employee_Id,Guest_Id")] Employee_Guest employee_Guest)
+        public ActionResult Edit([Bind(Include = "Id,Employee_Id,Guest_Id")] EmployeeGuest employee_Guest)
         {
             if (ModelState.IsValid)
             {
@@ -105,7 +108,7 @@ namespace WPG_ICSC_PT.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee_Guest employee_Guest = db.Employee_Guest.Find(id);
+            EmployeeGuest employee_Guest = db.EmployeeGuests.Find(id);
             if (employee_Guest == null)
             {
                 return HttpNotFound();
@@ -118,8 +121,8 @@ namespace WPG_ICSC_PT.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Employee_Guest employee_Guest = db.Employee_Guest.Find(id);
-            db.Employee_Guest.Remove(employee_Guest);
+            EmployeeGuest employee_Guest = db.EmployeeGuests.Find(id);
+            db.EmployeeGuests.Remove(employee_Guest);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

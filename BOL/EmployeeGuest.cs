@@ -12,15 +12,13 @@ namespace BOL
     using System;
     using System.Collections.Generic;
     
-    public partial class Note
+    public partial class EmployeeGuest
     {
         public int Id { get; set; }
-        public string Description { get; set; }
-        public Nullable<System.DateTime> Note_Date { get; set; }
-        public Nullable<System.DateTime> Note_Time { get; set; }
-        public string NoteType { get; set; }
-        public Nullable<int> Meeting_id { get; set; }
+        public Nullable<int> Employee_Id { get; set; }
+        public Nullable<int> Guest_Id { get; set; }
     
-        public virtual Meeting Meeting { get; set; }
+        public virtual Employee Employee { get; set; }
+        public virtual Guest Guest { get; set; }
     }
 }

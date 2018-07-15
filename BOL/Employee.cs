@@ -17,9 +17,8 @@ namespace BOL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employee()
         {
-            this.Employee_Guest = new HashSet<Employee_Guest>();
-            this.Meeting_Employee = new HashSet<Meeting_Employee>();
-            this.Notes = new HashSet<Note>();
+            this.EmployeeGuests = new HashSet<EmployeeGuest>();
+            this.MeetingEmployees = new HashSet<MeetingEmployee>();
         }
     
         public int Id { get; set; }
@@ -30,13 +29,13 @@ namespace BOL
         public Nullable<int> Role_Id { get; set; }
         public string EmployeeStatus { get; set; }
         public Nullable<int> Manager_Id { get; set; }
+        public Nullable<int> Region_Id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee_Guest> Employee_Guest { get; set; }
+        public virtual ICollection<EmployeeGuest> EmployeeGuests { get; set; }
+        public virtual Region Region { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Meeting_Employee> Meeting_Employee { get; set; }
+        public virtual ICollection<MeetingEmployee> MeetingEmployees { get; set; }
         public virtual Role Role { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Note> Notes { get; set; }
     }
 }

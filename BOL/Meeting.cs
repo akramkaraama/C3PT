@@ -18,25 +18,28 @@ namespace BOL
         public Meeting()
         {
             this.Guests = new HashSet<Guest>();
-            this.Meeting_Employee = new HashSet<Meeting_Employee>();
+            this.MeetingEmployees = new HashSet<MeetingEmployee>();
+            this.Notes = new HashSet<Note>();
         }
     
         public int Id { get; set; }
-        public System.TimeSpan Start_Time { get; set; }
-        public System.TimeSpan End_Time { get; set; }
-        public System.DateTime Meeting_Date { get; set; }
+        public System.DateTime Start_Time { get; set; }
+        public System.DateTime End_Time { get; set; }
+        public Nullable<System.DateTime> Meeting_Date { get; set; }
         public Nullable<System.DateTime> Date_Scheduled { get; set; }
         public string Topic { get; set; }
         public Nullable<int> MeetingStatus_id { get; set; }
         public Nullable<int> MeetingType_id { get; set; }
-        public Nullable<System.TimeSpan> Pause_Start_Time { get; set; }
-        public Nullable<System.TimeSpan> Pause_End_Time { get; set; }
+        public Nullable<System.DateTime> Pause_Start_Time { get; set; }
+        public Nullable<System.DateTime> Pause_End_Time { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Guest> Guests { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Meeting_Employee> Meeting_Employee { get; set; }
+        public virtual ICollection<MeetingEmployee> MeetingEmployees { get; set; }
         public virtual MeetingStatu MeetingStatu { get; set; }
         public virtual MeetingType MeetingType { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Note> Notes { get; set; }
     }
 }

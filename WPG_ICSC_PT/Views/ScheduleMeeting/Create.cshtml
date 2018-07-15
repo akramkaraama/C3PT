@@ -1,49 +1,9 @@
-﻿@model BOL.ScheduleMeetingVewModel
+﻿@model BOL.Meeting
 
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-@*@section Scripts {
-
-    <script type="text/javascript" src="~/Content/pickaday.js"></script>
-    <script type="text/javascript" src="~/Content/jquery.ptTimeSelect.js"></script>
-    <script type="text/javascript" src="moment.js"></script>
-    <script>
-        // initialize input widgets
-        // ptTimeSelect doesn't trigger change event by default
-        $('#alternateUiWidgetsExample .time').ptTimeSelect({
-            'onClose': function ($self) {
-                $self.trigger('change');
-            }
-        });
-
-        $('#alternateUiWidgetsExample .date').pikaday();
-
-        var TIMEFORMAT = 'h:mm a';
-        var alternateUiWidgetsExampleEl = document.getElementById('alternateUiWidgetsExample');
-        var alternateWidgetsDatepair = new Datepair(alternateUiWidgetsExampleEl, {
-            parseTime: function (input) {
-                // use moment.js to parse time
-                var m = moment(input.value, TIMEFORMAT);
-                return m.toDate();
-            },
-            updateTime: function (input, dateObj) {
-                var m = moment(dateObj);
-                input.value = m.format(TIMEFORMAT);
-            },
-            parseDate: function (input) {
-                var picker = $(input).data('pikaday');
-                return picker.getDate();
-            },
-            updateDate: function (input, dateObj) {
-                var picker = $(input).data('pikaday');
-                return picker.setDate(dateObj);
-            }
-        });
-    </script>
-}*@
 
 @using (Html.BeginForm("Create", "ScheduleMeeting", FormMethod.Post))
 {
@@ -72,67 +32,51 @@
                                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                     <br />
                                     <div class="form-group glyphicon-align-center">
-                                        @Html.LabelFor(model => model.Meeting.MeetingType_id, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        @Html.LabelFor(model => model.MeetingType_id, htmlAttributes: new { @class = "control-label col-md-2" })
                                         <div class="col-md-10">
                                             @Html.DropDownList("MeetingType_id", null, htmlAttributes: new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.Meeting.MeetingType_id, "", new { @class = "text-danger" })
+                                            @Html.ValidationMessageFor(model => model.MeetingType_id, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
 
-                                    @*<div class="form-group">
-                                            @Html.LabelFor(model => model.Meeting.Start_Time, htmlAttributes: new { @class = "control-label col-md-2" })
-                                            <div class="col-md-10">
-                                                @Html.EditorFor(model => model.Meeting.Start_Time, new { htmlAttributes = new { @class = "form-control" } })
-                                                @Html.ValidationMessageFor(model => model.Meeting.Start_Time, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.Meeting.End_Time, htmlAttributes: new { @class = "control-label col-md-2" })
-                                            <div class="col-md-10">
-                                                @Html.EditorFor(model => model.Meeting.End_Time, new { htmlAttributes = new { @class = "form-control" } })
-                                                @Html.ValidationMessageFor(model => model.Meeting.End_Time, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>*@
-
-                                    @*<p id="alternateUiWidgetsExample">
-                                        <input type="date" class="date start" />
-                                        <input type="time" class="time start" /> to<br />
-                                        <input type="time" class="date end" />
-                                        <input type="date" class="time end" />
-                                    </p>*@
-
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.Meeting.Meeting_Date, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        @Html.LabelFor(model => model.Meeting_Date, htmlAttributes: new { @class = "control-label col-md-2" })
                                         <div class="col-md-10 ">
-                                            @Html.EditorFor(model => model.Meeting.Meeting_Date, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.Meeting.Meeting_Date, "", new { @class = "text-danger" })
+                                            @Html.EditorFor(model => model.Meeting_Date, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.Meeting_Date, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.Meeting.Date_Scheduled, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        @Html.LabelFor(model => model.Date_Scheduled, htmlAttributes: new { @class = "control-label col-md-2" })
                                         <div class="col-md-10">
-                                            @Html.EditorFor(model => model.Meeting.Date_Scheduled, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.Meeting.Date_Scheduled, "", new { @class = "text-danger" })
+                                            @Html.EditorFor(model => model.Date_Scheduled, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.Date_Scheduled, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.Meeting.Topic, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        @Html.LabelFor(model => model.Topic, htmlAttributes: new { @class = "control-label col-md-2" })
                                         <div class="col-md-10">
-                                            @Html.EditorFor(model => model.Meeting.Topic, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.Meeting.Topic, "", new { @class = "text-danger" })
+                                            @Html.EditorFor(model => model.Topic, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.Topic, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.Meeting.MeetingStatus_id, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        @Html.LabelFor(model => model.MeetingStatus_id, htmlAttributes: new { @class = "control-label col-md-2" })
                                         <div class="col-md-10">
                                             @Html.DropDownList("MeetingStatus_id", null, htmlAttributes: new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.Meeting.MeetingStatus_id, "", new { @class = "text-danger" })
+                                            @Html.ValidationMessageFor(model => model.MeetingStatus_id, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
+                                    @*<div class="form-group">
+                                        @Html.LabelFor(model => model.Employee.Id, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.DropDownList("F_Name", null, htmlAttributes: new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.Employee.Meeting_Employee, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>*@
                                 </div>
                             </td>
                         </tr>

@@ -17,7 +17,7 @@ namespace WPG_ICSC_PT.Controllers
         // GET: MeetingEmployee
         public ActionResult Index()
         {
-            var meeting_Employee = db.Meeting_Employee.Include(m => m.Employee).Include(m => m.Meeting);
+            var meeting_Employee = db.MeetingEmployees.Include(m => m.Employee).Include(m => m.Meeting);
             return View(meeting_Employee.ToList());
         }
 
@@ -28,7 +28,7 @@ namespace WPG_ICSC_PT.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Meeting_Employee meeting_Employee = db.Meeting_Employee.Find(id);
+            MeetingEmployee meeting_Employee = db.MeetingEmployees.Find(id);
             if (meeting_Employee == null)
             {
                 return HttpNotFound();
@@ -41,6 +41,7 @@ namespace WPG_ICSC_PT.Controllers
         {
             ViewBag.Employee_Id = new SelectList(db.Employees, "Id", "F_Name");
             ViewBag.Meeting_Id = new SelectList(db.Meetings, "Id", "Topic");
+            ViewBag.IsRequired = new SelectList(db.MeetingEmployees, "IsRequired", "IsRequired");
             return View();
         }
 
@@ -49,11 +50,11 @@ namespace WPG_ICSC_PT.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Employee_Id,Meeting_Id,IsRequired")] Meeting_Employee meeting_Employee)
+        public ActionResult Create([Bind(Include = "Id,Employee_Id,Meeting_Id,IsRequired")] MeetingEmployee meeting_Employee)
         {
             if (ModelState.IsValid)
             {
-                db.Meeting_Employee.Add(meeting_Employee);
+                db.MeetingEmployees.Add(meeting_Employee);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -70,7 +71,7 @@ namespace WPG_ICSC_PT.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Meeting_Employee meeting_Employee = db.Meeting_Employee.Find(id);
+            MeetingEmployee meeting_Employee = db.MeetingEmployees.Find(id);
             if (meeting_Employee == null)
             {
                 return HttpNotFound();
@@ -85,7 +86,7 @@ namespace WPG_ICSC_PT.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Employee_Id,Meeting_Id,IsRequired")] Meeting_Employee meeting_Employee)
+        public ActionResult Edit([Bind(Include = "Id,Employee_Id,Meeting_Id,IsRequired")] MeetingEmployee meeting_Employee)
         {
             if (ModelState.IsValid)
             {
@@ -105,7 +106,7 @@ namespace WPG_ICSC_PT.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Meeting_Employee meeting_Employee = db.Meeting_Employee.Find(id);
+            MeetingEmployee meeting_Employee = db.MeetingEmployees.Find(id);
             if (meeting_Employee == null)
             {
                 return HttpNotFound();
@@ -118,8 +119,8 @@ namespace WPG_ICSC_PT.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Meeting_Employee meeting_Employee = db.Meeting_Employee.Find(id);
-            db.Meeting_Employee.Remove(meeting_Employee);
+            MeetingEmployee meeting_Employee = db.MeetingEmployees.Find(id);
+            db.MeetingEmployees.Remove(meeting_Employee);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -10,15 +10,10 @@
 namespace BOL
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Employee_Guest
+    public partial class sp_helpdiagramdefinition_Result
     {
-        public int Id { get; set; }
-        public Nullable<int> Employee_Id { get; set; }
-        public Nullable<int> Guest_Id { get; set; }
-    
-        public virtual Employee Employee { get; set; }
-        public virtual Guest Guest { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

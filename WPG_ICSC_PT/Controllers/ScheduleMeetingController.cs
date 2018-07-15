@@ -153,5 +153,3 @@ namespace WPG_ICSC_PT.Controllers
 //    db.SaveChanges();
 //    return RedirectToAction("Index");
 //}
-
-

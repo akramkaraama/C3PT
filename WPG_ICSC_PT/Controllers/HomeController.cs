@@ -23,27 +23,27 @@ namespace WPG_ICSC_PT.Controllers
         {
             if (User.IsInRole("A"))
             {
-                emp = wpgDb.Employees.Include(x => x.Employee_Guest).Include(x => x.Meeting_Employee).Include(x => x.Role).Where(x => x.Role.Role1 == "LA" || x.Role.Role1 == "A").ToList();
+                emp = wpgDb.Employees.Include(x => x.EmployeeGuests).Include(x => x.MeetingEmployees).Include(x => x.Role).Where(x => x.Role.Role1 == "LA" || x.Role.Role1 == "A").ToList();
             }
             else if (User.IsInRole("LA"))
             {
-                emp = wpgDb.Employees.Include(x => x.Employee_Guest).Include(x => x.Meeting_Employee).Include(x => x.Role).Where(x => x.Role.Role1 == "LA").ToList();
+                emp = wpgDb.Employees.Include(x => x.EmployeeGuests).Include(x => x.MeetingEmployees).Include(x => x.Role).Where(x => x.Role.Role1 == "LA").ToList();
             }
             else if (User.IsInRole("BE"))
             {
-                emp = wpgDb.Employees.Include(x => x.Employee_Guest).Include(x => x.Meeting_Employee).Include(x => x.Role).ToList();               
+                emp = wpgDb.Employees.Include(x => x.EmployeeGuests).Include(x => x.MeetingEmployees).Include(x => x.Role).ToList();               
             }
             else if (User.IsInRole("E"))
             {
-                emp = wpgDb.Employees.Include(x => x.Employee_Guest).Include(x => x.Meeting_Employee).Include(x => x.Role).ToList();
+                emp = wpgDb.Employees.Include(x => x.EmployeeGuests).Include(x => x.MeetingEmployees).Include(x => x.Role).ToList();
             }
-            //emp = wpgDb.Employees.Include(x => x.Employee_Guest).Include(x => x.Meeting_Employee).Include(x => x.Role).ToList();
-            return View(emp.OrderByDescending(x => x.Meeting_Employee.Count > 0).ToPagedList(page ?? 1, 20));
+
+            //ViewData["MeetingTopic"] = User.
+
+            return View(emp.OrderByDescending(x => x.MeetingEmployees.Count > 0).ToPagedList(page ?? 1, 20));
         }
     }
 }
-
-
 
 //WPG_ConferenceEntities wpgDb;
 //HomeViewModel homeVM;

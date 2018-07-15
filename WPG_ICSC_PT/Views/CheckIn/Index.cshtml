@@ -1,64 +1,118 @@
-﻿@model IEnumerable<BOL.Guest>
-
+﻿@model IPagedList<BOL.EmployeeGuest>
+@using PagedList.Mvc;
+@using PagedList;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<div class="col-md-12">
+    <h2>Check In</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.F_Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.L_Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Company.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Meeting.Topic)
-        </th>
-        <th></th>
-    </tr>
+    @if (TempData["checkinmsg"] != null)
+    {
+        @Html.Raw(TempData["checkinmsg"])
+    }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.F_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.L_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PhoneNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Company.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Meeting.Topic)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+    @using (@Html.BeginForm("Index", "CheckIn", FormMethod.Get))
+    {
+        <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+                <table class="table-hover table-condensed">
+                    <tr class="col-md-12">
+                        <td>
+                            <b>Search By:</b>
+                        </td>
+                        <td>
+                            @Html.RadioButton("searchBy", "All", true)
+                            <text>Display All</text>
+                        </td>
+                        <td>
+                            @Html.RadioButton("searchBy", "Name")
+                            <text>Company Name</text>
+                        </td>
+                        <td>
+                            @Html.RadioButton("searchBy", "Email")
+                            <text>Email</text>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="form-horizontal">
+                            @Html.TextBox("Search", null, new { @class = "form-control col-md-4" })                        
+                            <button class="btn btn-info"><i class="glyphicon glyphicon-search"></i></button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    }
+</div>
+
+@if (Model == null)
+{
+    <div>
+        <div class="col-md-6">
+            Please select a Search option, and provide a hint!
+        </div>
+    </div>
 }
-
-</table>
+else
+{
+    <div class="table-responsive col-md-12">
+        <table class="table table-striped table-hover table-bordered">
+            <thead class="btn-primary">
+                <tr>
+                    <th>
+                        Guest Name
+                    </th>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        Time
+                    </th>
+                    <th>
+                        Company Name
+                    </th>
+                    <th>
+                        Agent Name
+                    </th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Guest.F_Name)
+                        @Html.DisplayFor(modelItem => item.Guest.L_Name)
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.Guest.Email)*@
+                        @Html.DisplayFor(modelItem => item.Guest.Meeting.Meeting_Date) @*.Month)/@Html.DisplayFor(modelItem => item.Guest.Meeting.Meeting_Date.Day)/@Html.DisplayFor(modelItem => item.Guest.Meeting.Meeting_Date.Year)*@
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Guest.Meeting.Start_Time)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Guest.Company.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Employee.F_Name)
+                        @Html.DisplayFor(modelItem => item.Employee.L_Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Check-In", "CheckIn", new { guestId = item.Id })
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <table>
+        <tr>
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
+        </tr>
+    </table>
+}

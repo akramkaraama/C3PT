@@ -10,17 +10,13 @@
 namespace BOL
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Note
+    public partial class sp_helpdiagrams_Result
     {
-        public int Id { get; set; }
-        public string Description { get; set; }
-        public Nullable<System.DateTime> Note_Date { get; set; }
-        public Nullable<System.DateTime> Note_Time { get; set; }
-        public string NoteType { get; set; }
-        public Nullable<int> Meeting_id { get; set; }
-    
-        public virtual Meeting Meeting { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }

@@ -10,16 +10,17 @@
 namespace BOL
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Meeting_Employee
+    public partial class GetEmployee_Result
     {
         public int Id { get; set; }
-        public Nullable<int> Employee_Id { get; set; }
-        public Nullable<int> Meeting_Id { get; set; }
-        public Nullable<bool> IsRequired { get; set; }
-    
-        public virtual Employee Employee { get; set; }
-        public virtual Meeting Meeting { get; set; }
+        public string F_Name { get; set; }
+        public string L_Name { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public Nullable<int> Role_Id { get; set; }
+        public string EmployeeStatus { get; set; }
+        public Nullable<int> Manager_Id { get; set; }
+        public Nullable<int> Region_Id { get; set; }
     }
 }

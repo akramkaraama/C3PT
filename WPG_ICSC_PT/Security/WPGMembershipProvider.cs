@@ -20,11 +20,7 @@ namespace WPG_ICSC_PT.Security
                 && x.Password == password);
             return isUserValid != null;
         }
-
-
-
-
-
+        
 
         public override bool EnablePasswordRetrieval => throw new NotImplementedException();
 

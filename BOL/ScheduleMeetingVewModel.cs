@@ -14,7 +14,7 @@ namespace BOL
         public Meeting Meeting { get; set; }
         public Guest Guest { get; set; }
         public List<Company> Company { get; set; }
-        //public Meeting_Employee empMeetings { get; set; }
+        public MeetingEmployee MeetingEmployee { get; set; }
 
     }
 }

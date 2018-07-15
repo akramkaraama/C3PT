@@ -4,78 +4,68 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - WASHINGTON PRIME GROUP CONFERENCE SCHEDULING</title>
+
+    @*<script src="~/Scripts/jquery-3.3.1.min.js"></script>*@
+
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/Bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.min.css">
+
+
+    @*<script type="text/javascript" src="~/Content/bootstrap.min.js"></script>*@
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @if (User.Identity.IsAuthenticated)
-                {
-                    @Html.ActionLink("WPG Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                }
-                else
-                {
-                    @Html.ActionLink("WPG Login", "Login", "Security", new { area = "" }, new { @class = "navbar-brand" })
-                }
-            </div>
-            <div class="navbar-collapse collapse">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @if (User.Identity.IsAuthenticated)
+            {
+                @Html.ActionLink("WPG Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
                 <ul class="nav navbar-nav">
-
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        @*<li> @Html.ActionLink("Home", "Index", "Home")</li>*@
-                        @*<li class="dropdown">*@
-                            <li class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    Schedule Meeting <span class="caret"></span>
-                                </a>
-                                @*@Html.ActionLink("Schedule A Meeting", "Create", "ScheduleMeeting")*@
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>@Html.ActionLink("Step1: Schedule Meeting", "Create", "ScheduleMeeting")</li>
-                                    <li>@Html.ActionLink("Step2: Asign Meeting to Employee", "Create", "MeetingEmployee")</li>
-                                    <li>@Html.ActionLink("Step3: Asign Employee to Guest", "Create", "EmployeeGuest")</li>
-
-
-                                    @*<li><a href="@Url.Action("Index", "MeetingEmployee")">Step2: Asign Meeting to Employee</a></li>
-                                    <li><a href="@Url.Action("Index", "Schedule")">Step3: Asign Employee to Guest</a></li>*@
-                                </ul>
-                            </li>
-                        @*</li>*@
-                        <li>@Html.ActionLink("Guest Check-In", "Index", "CheckIn")</li>
-                        <li>@Html.ActionLink("Reports", "Index", "Reports")</li>
-                    }
-                    @*else
-                    {
-                        <li>@Html.ActionLink("Login", "Login", "Security")</li>
-                    }*@
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            Schedule Meeting <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Step1: Schedule Meeting", "Create", "ScheduleMeeting")</li>
+                            <li>@Html.ActionLink("Step2: Asign Meeting to Employee", "Create", "MeetingEmployee")</li>
+                            <li>@Html.ActionLink("Step3: Asign Employee to Guest", "Create", "EmployeeGuest")</li>
+                        </ul>
+                    </li>
+                    <li>@Html.ActionLink("Guest Check-In", "Index", "CheckIn")</li>
+                    <li>@Html.ActionLink("Reports", "Index", "Reports")</li>
                 </ul>
+            }
+            else
+            {
+                @Html.ActionLink("WPG Login", "Login", "Security", new { area = "" }, new { @class = "navbar-brand" })
+            }
+        </div>
 
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div>
                 <ul class="nav navbar-nav pull-right">
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <li class="pull-right">@Html.ActionLink("LogOut", "LogOut", "Security")</li>
-                        <li class="pull-right"><a href="#"><b>Welcome</b> @User.Identity.Name</a></li>
-                    }
+                    <li class="pull-right">@Html.ActionLink("LogOut", "LogOut", "Security")</li>
+                    <li class="pull-right"><a href="#"><b>Welcome</b> @User.Identity.Name</a></li>
                 </ul>
             </div>
-        </div>
-    </div>
+        }
+    </nav>
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-            @*<p>This is a Login Page</p>*@
+        <footer class="col-md-12">
+            <p>&copy; @DateTime.Now.Year - WPG Conference Schduling Application</p>
         </footer>
     </div>
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

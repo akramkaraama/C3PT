@@ -11,9 +11,7 @@ namespace BOL
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Company
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,7 +21,6 @@ namespace BOL
         }
     
         public int Id { get; set; }
-        [Required]
         public string Name { get; set; }
         public int NumberOfProperties { get; set; }
     

@@ -10,17 +10,17 @@
 namespace BOL
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Note
+    public partial class GetEmployeeLogin_Result
     {
         public int Id { get; set; }
-        public string Description { get; set; }
-        public Nullable<System.DateTime> Note_Date { get; set; }
-        public Nullable<System.DateTime> Note_Time { get; set; }
-        public string NoteType { get; set; }
-        public Nullable<int> Meeting_id { get; set; }
-    
-        public virtual Meeting Meeting { get; set; }
+        public string F_Name { get; set; }
+        public string L_Name { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public Nullable<int> Role_Id { get; set; }
+        public string EmployeeStatus { get; set; }
+        public Nullable<int> Manager_Id { get; set; }
+        public Nullable<int> Region_Id { get; set; }
     }
 }

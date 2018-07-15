@@ -25,10 +25,34 @@
                     <i class="glyphicon glyphicon-bell " style="color: green"></i>  <strong>CompanyName: </strong> @Model.Guests.FirstOrDefault(x => x.Meeting_Id == Model.Id).Company.Name
                 </li>
                 @*<li class="list-group-item">
-            <i class="glyphicon glyphicon-bell " style="color: green"></i>  <strong>Notes: </strong><p> @Model.Meeting_Employee.FirstOrDefault(x => x.Meeting_Id == Model.Id).Employee.Notes </p>
-        </li>*@
+                        <i class="glyphicon glyphicon-bell " style="color: green"></i>  <strong>Notes: </strong><p> @Model.Notes.FirstOrDefault(x => x.Meeting_id == Model.Id && x.NoteType == "Pre-Note").Description </p>
+                    </li>*@
+
+                @if ((Model.Notes.FirstOrDefault(x => x.Meeting_id == Model.Id).NoteType == "Pre-Note") &&
+                (Model.Notes.FirstOrDefault(x => x.Meeting_id == Model.Id).Description != null))
+                {
+                    <li class="list-group-item">
+
+                        <i class="glyphicon glyphicon-book " style="color: green"></i>
+                        <strong>Notes: </strong><p> @Model.Notes.FirstOrDefault(x => x.Meeting_id == Model.Id && x.NoteType == "Pre-Note").Description </p>
+                    </li>
+                }
+
+                @if ((Model.Notes.FirstOrDefault(x => x.Meeting_id == Model.Id).NoteType == "Post-Note") &&
+                (Model.Notes.FirstOrDefault(x => x.Meeting_id == Model.Id).Description != null))
+                {
+                    <li class="list-group-item">
+
+                        <i class="glyphicon glyphicon-book " style="color: green"></i>
+                        <strong>Notes: </strong><p> @Model.Notes.FirstOrDefault(x => x.Meeting_id == Model.Id && x.NoteType == "Post-Note").Description </p>
+                    </li>
+                }
             </ul>
+            <div class="pull-right">
+                <b>@Html.ActionLink("Edit This Meeting", "Edit", new { id = Model.Id })</b>
+            </div>
         </div>
+
     </div>
 }
 else
